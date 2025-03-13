@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        RAILS_ENV: development  # Define que estamos rodando em desenvolvimento
+    container_name: level_up_app
+    command: bash -c "rm -f tmp/pids/server.pid && rails server -b 0.0.0.0"
+    volumes:
+      - .:/rails  # Monta o código no container para desenvolvimento
+      - bundle_data:/usr/local/bundle  # Cache de gems
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: "postgres://postgres:postgres@db:5432/level_up_development"
+
+  db:
+    image: postgres:15
+    container_name: level_up_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: level_up_development
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  bundle_data:
+  postgres_data:
