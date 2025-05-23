@@ -1,0 +1,65 @@
+_format_version: "3.0"
+
+# Definindo o serviço (sua aplicação Rails)
+services:
+  - name: rails-app
+    url: http://rails:3000
+    tags:
+      - rails
+      - api
+
+# Definindo as rotas
+routes:
+  - name: rails-route
+    service: rails-app
+    paths:
+      - "/"
+    methods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+      - OPTIONS
+    strip_path: false
+    preserve_host: false
+
+# Plugins globais (opcional)
+plugins:
+  # Plugin para CORS
+  - name: cors
+    config:
+      origins:
+        - "*"
+      methods:
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+        - OPTIONS
+      headers:
+        - Accept
+        - Accept-Version
+        - Content-Length
+        - Content-MD5
+        - Content-Type
+        - Date
+        - Authorization
+        - X-Requested-With
+      exposed_headers:
+        - X-Auth-Token
+      credentials: true
+      max_age: 3600
+
+  # Plugin para logging (opcional)
+  - name: file-log
+    config:
+      path: /tmp/kong.log
+      format: combined
+
+# Consumers (usuários da API - opcional)
+consumers: []
+
+# Certificados (para HTTPS - opcional)
+certificates: []
