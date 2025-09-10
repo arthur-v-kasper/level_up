@@ -6,6 +6,7 @@ services:
         RAILS_ENV: development # Define que estamos rodando em desenvolvimento
     container_name: level_up_app
     command: bash -c "rm -f tmp/pids/server.pid && rails server -b 0.0.0.0"
+    user: "1000:1000" # Garante que roda como usuário correto
     volumes:
       - .:/rails # Monta o código no container para desenvolvimento
       - bundle_data:/usr/local/bundle # Cache de gems
