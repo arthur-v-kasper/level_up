@@ -22,3 +22,10 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+```ruby
+# Run job of subscribed 
+
+docker compose exec app rails runner 'Pubsub::Subscriber.new("my-topic-sub").listen'
+```

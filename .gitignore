@@ -33,3 +33,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 .aider*
+
+# gcp files
+/config/gcp/*
+
+# env file
+.env

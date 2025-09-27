@@ -62,7 +62,9 @@ COPY --from=build /rails /rails
 # Ajusta permissões de arquivos do runtime para um usuário não-root
 RUN groupadd --system --gid 1000 rails && \
   useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-  chown -R rails:rails db log storage tmp
+  chown -R rails:rails db log storage tmp && \
+  # Adicione esta linha para dar permissão ao usuário `rails` sobre as gems
+  chown -R rails:rails "${BUNDLE_PATH}" 
 USER 1000:1000
 
 # Entrypoint para preparar o banco de dados
